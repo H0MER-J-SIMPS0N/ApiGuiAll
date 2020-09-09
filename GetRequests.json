@@ -1,0 +1,272 @@
+[
+	{
+		"What": "Запрос контракта (R4)",
+		"Zone": [ "Stage", "ProdR4", "MskCbrf"],
+		"ByWhat": [
+			{
+				"Name": "Код контракта",
+				"WhatToEnter": "Введите код контракта (CXXXXXXXXX):",
+				"Endpoint": "r4/fhir/contract/contractNumber",
+				"Argument": "contractNumber",
+				"Headers": {					
+						"Accept": "application/fhir+json"					
+				}
+			}
+		]
+	},
+	{
+		"What": "Каталог исследований (R4)",
+		"Zone": [ "Stage", "ProdR4", "MskCbrf"],
+		"ByWhat": [
+			{
+				"Name": "Код контракта",
+				"WhatToEnter": "Введите код контракта (CXXXXXXXXX):",
+				"Endpoint": "r4/fhir/catalog/contractNumber",
+				"Argument": "contractNumber",
+				"Headers": {
+						"Accept": "application/fhir+json"
+				}
+			}
+		]
+	},
+	{
+		"What": "Bundle (R4)",
+		"Zone": [ "Stage", "ProdR4", "MskCbrf"],
+		"ByWhat": [
+			{
+				"Name": "Id",
+				"WhatToEnter": "Введите id bundle:",
+				"Endpoint": "r4/fhir/bundle/bundleId",
+				"Argument": "bundleId",
+				"Headers": {					
+						"Accept": "application/fhir+json"					
+				}
+			}
+		]
+	},
+	{
+		"What": "Task (R4)",
+		"Zone": [ "Stage", "ProdR4", "MskCbrf"],
+		"ByWhat": [
+			{
+				"Name": "Id",
+				"WhatToEnter": "Введите id task:",
+				"Endpoint": "r4/fhir/Task/taskGuid",
+				"Argument": "taskGuid",
+				"Headers": {					
+						"Accept": "application/fhir+json"					
+				}
+			},
+			{
+				"Name": "Номер заказа",
+				"WhatToEnter": "Введите номер заказа:",
+				"Endpoint": "r4/fhir/Task?identifier=https://helix.ru/codes/mis|orderNumber",
+				"Argument": "orderNumber",
+				"Headers": {					
+						"Accept": "application/fhir+json"					
+				}
+			}
+		]
+	},
+	{
+		"What": "1. Specimen (STU3)",
+		"Zone": [ "Stage", "ProdSTU3"],
+		"ByWhat": [
+			{
+				"Name": "Номер ШК",
+				"WhatToEnter": "Введите номер ШК:",
+				"Endpoint": "fhir/Specimen?container-id=labelId",
+				"Argument": "labelId",
+				"Headers": {
+						"Accept": "application/fhir+json"
+				}
+			},
+			{
+				"Name": "Specimen id",
+				"WhatToEnter": "Введите specimen id:",
+				"Endpoint": "fhir/Specimen/specimenId",
+				"Argument": "specimenId"
+			}
+		]
+	},
+	{
+		"What": "2. ProcedureRequest (STU3)",
+		"Zone": [ "Stage", "ProdSTU3"],
+		"ByWhat": [
+			{
+				"Name": "Specimen id",
+				"WhatToEnter": "Введите specimen id:",
+				"Endpoint": "fhir/procedurerequest?specimen=specimen/specimenId",
+				"Argument": "specimenId"
+			},
+			{
+				"Name": "ProcedureRequest id",
+				"WhatToEnter": "Введите procedureRequest id:",
+				"Endpoint": "fhir/procedurerequest/procedureRequestId",
+				"Argument": "procedureRequestId"
+			}
+		]
+	},
+	{
+		"What": "3. Task (STU3)",		
+		"Zone": [ "Stage", "ProdSTU3"],
+		"ByWhat": [
+			{
+				"Name": "ProcedureRequest id",
+				"WhatToEnter": "Введите ProcedureRequest id:",
+				"Endpoint": "fhir/task?basedOn.0.reference=procedureRequest/procedureRequestId",
+				"Argument": "procedureRequestId"
+			},
+			{
+				"Name": "Task id",
+				"WhatToEnter": "Введите task id:",
+				"Endpoint": "fhir/Task/taskId",
+				"Argument": "taskId"
+			},
+			{
+				"Name": "Номер заказа",
+				"WhatToEnter": "Введите номер заказа:",
+				"Endpoint": "fhir/task?identifier=http://helix.ru/codes/mis|orderNumber",
+				"Argument": "orderNumber"
+			},
+			{
+				"Name": "id task уровня OrderProcessing",
+				"WhatToEnter": "Введите id task уровня OrderProcessing:",
+				"Endpoint": "fhir/task?part-of=task/taskId",
+				"Argument": "taskId"
+			}
+		]
+	},
+	{
+		"What": "4. DiagnosticReport (STU3)",
+		"Zone": [ "Stage", "ProdSTU3"],
+		"ByWhat": [
+			{
+				"Name": "ProcedureRequest id",
+				"WhatToEnter": "Введите procedureRequest id:",
+				"Endpoint": "fhir/diagnosticreport?based-on=procedurerequest/procedureRequestId",
+				"Argument": "procedureRequestId"
+			},
+			{
+				"Name": "DiagnosticReport id",
+				"WhatToEnter": "Введите diagnosticReport id:",
+				"Endpoint": "fhir/diagnosticreport/diagnosticReportId",
+				"Argument": "diagnosticReportId"
+			}
+		]
+	},
+	{
+		"What": "5. Запрос номенклатуры (STU3)",
+		"Zone": [ "Stage", "ProdSTU3"],
+		"ByWhat": [
+			{
+				"Name": "Код контракта",
+				"WhatToEnter": "Введите код контракта (CXXXXXXXXX):",
+				"Endpoint": "nomenclature?contract=contractNumber",
+				"Argument": "contractNumber"
+			}
+		]
+	},
+	{
+		"What": "6. Ресурс контракт (STU3)",
+		"Zone": [ "Stage", "ProdSTU3"],
+		"ByWhat": [
+			{
+				"Name": "Номер контракта",
+				"WhatToEnter": "Введите номер контракта (CXXXXXXXXX):",
+				"Endpoint": "fhir/contract?identifier.system=http://helix.ru/codes/contract&identifier.value=contractNumber",
+				"Argument": "contractNumber"
+			},
+			{
+				"Name": "Id контракта",
+				"WhatToEnter": "Введите id контракта:",
+				"Endpoint": "fhir/contract/contractId",
+				"Argument": "contractId"
+			}
+		]
+	},
+	{
+		"What": "7. Организация (STU3)",
+		"Zone": [ "Stage", "ProdSTU3"],
+		"ByWhat": [
+			{
+				"Name": "Наименование организации",
+				"WhatToEnter": "Введите полное наименование организации:",
+				"Endpoint": "fhir/organization?name=organizationName",
+				"Argument": "organizationName"
+			},
+			{
+				"Name": "Id организации",
+				"WhatToEnter": "Введите id организации:",
+				"Endpoint": "fhir/organization/organizationId",
+				"Argument": "organizationId"
+			}
+		]
+	},
+	{
+		"What": "8. Предзаказы (STU3)",
+		"Zone": [ "Stage", "ProdSTU3"],
+		"ByWhat": [
+			{
+				"Name": "ProcedureRequest id",
+				"WhatToEnter": "Введите procedureRequest id:",
+				"Endpoint": "fhir/procedurerequest?identifier=|ProcedureRequest/procedureRequestId",
+				"Argument": "procedureRequestId"
+			},
+			{
+				"Name": "Номер предзаказа",
+				"WhatToEnter": "Введите номер предзаказа в виде '31773&identifier=|100002270124':",
+				"Endpoint": "fhir/task?identifier=|preorderIdentifier",
+				"Argument": "preorderIdentifier"
+			}
+		]
+	},
+	{
+		"What": "9. Пациент (STU3)",
+		"Zone": [ "Stage", "ProdSTU3"],
+		"ByWhat": [
+			{
+				"Name": "Patient id",
+				"WhatToEnter": "Введите patient id:",
+				"Endpoint": "fhir/patient/patientId",
+				"Argument": "patientId"
+			}
+		]
+	},
+	{
+		"What": "10. Observation (STU3)",
+		"Zone": [ "Stage", "ProdSTU3"],
+		"ByWhat": [
+			{
+				"Name": "Observation id",
+				"WhatToEnter": "Введите observation id:",
+				"Endpoint": "fhir/observation/observationId",
+				"Argument": "observationId"
+			}
+		]
+	},
+	{
+		"What": "11. Bundle (STU3)",
+		"Zone": [ "Stage", "ProdSTU3"],
+		"ByWhat": [
+			{
+				"Name": "Bundle id",
+				"WhatToEnter": "Введите bundle id:",
+				"Endpoint": "fhir/Bundle/bundleId",
+				"Argument": "bundleId"
+			}
+		]
+	},
+	{
+		"What": "12. Получение номенклатуры b2c (STU3)",
+		"Zone": [ "Stage", "ProdSTU3"],
+		"ByWhat": [
+			{
+				"Name": "Код контракта",
+				"WhatToEnter": "Введите код контракта (CXXXXXXXXX):",
+				"Endpoint": "b2c/nomenclature?contract=contractNumber",
+				"Argument": "contractNumber"
+			}
+		]
+	}
+]

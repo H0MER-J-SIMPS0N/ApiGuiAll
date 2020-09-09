@@ -1,0 +1,120 @@
+[
+	{
+		"What": "Добавить ресурс контракта STU3",
+		"Zone": [ "Stage", "ProdSTU3"],
+		"WithWhat": {
+			"WhatToEnterOne": "Введите номер контракта (CXXXXXXXXX):",
+			"WhatToEnterTwo": "Введите id клиента:",
+			"Endpoint": "fhir/contract",
+			"PostData": "{'resourceType':'contract','meta':{'security':[{'system': 'read', 'code': 'clientId'}]},'identifier':{'value':'contractNumber','system':'http://helix.ru/codes/contract'}}",
+			"ArgumentOne": "contractNumber",
+			"ArgumentTwo": "clientId",
+			"Headers": {
+				"Accept": "application/fhir+json,application/json",
+				"Content-Type": "application/json"
+			}
+		}
+	},
+	{
+		"What": "Добавить ресурс организации STU3",
+		"Zone": [ "Stage", "ProdSTU3"],
+		"WithWhat": {
+			"WhatToEnterOne": "Введите полное имя организации (с обратным слешем перед кавычками):",
+			"WhatToEnterTwo": "Введите id клиента:",
+			"Endpoint": "fhir/organization",
+			"PostData": "{'resourceType':'Organization','identifier':{'system':'https://api.medlinx.online/user-id','value':'clientId'},'name':'organizationName'}",
+			"ArgumentOne": "organizationName",
+			"ArgumentTwo": "clientId",
+			"Headers": {
+				"Accept": "application/fhir+json,application/json",
+				"Content-Type": "application/json"
+			}
+		}
+	},
+	{
+	"What": "Запрос опросника STU3",
+	"Zone": [ "Stage", "ProdSTU3"],
+	"WithWhat": {
+			"WhatToEnterOne": "Введите данные post:",
+			"Endpoint": "questionnaire",
+			"PostData": "postData",
+			"ArgumentOne": "postData",
+			"Headers": {
+				"Accept": "application/fhir+json,application/json",
+				"Content-Type": "application/json"
+			}
+		}
+	},
+	{
+	"What": "Запрос преаналитики STU3",
+	"Zone": [ "Stage", "ProdSTU3"],
+	"WithWhat": {
+			"WhatToEnterOne": "Введите данные post:",
+			"Endpoint": "preanalytics",
+			"PostData": "postData",
+			"ArgumentOne": "postData",
+			"Headers": {
+				"Accept": "application/fhir+json,application/json",
+				"Content-Type": "application/json"
+			}
+		}
+	},
+	{
+	"What": "Добавление прав на контракт STU3",
+	"Zone": [ "Stage", "ProdSTU3"],
+	"WithWhat": {
+			"WhatToEnterOne": "Введите id контракта:",
+			"WhatToEnterTwo": "Введите id клиента:",
+			"Endpoint": "fhir/contract/contractId/$meta-add",
+			"PostData": "{'resourceType':'Parameters','id':'contractId','meta':{'security':[{'system':'read','code':'clientId'}]}}",
+			"ArgumentOne": "contractId",
+			"ArgumentTwo": "clientId",
+			"Headers": {
+				"Accept": "application/fhir+json,application/json",
+				"Content-Type": "application/json"
+			}
+		}
+	},
+	{
+	"What": "Удаление прав на контракт STU3",
+	"Zone": [ "Stage", "ProdSTU3"],
+	"WithWhat": {
+			"WhatToEnterOne": "Введите id контракта:",
+			"WhatToEnterTwo": "Введите id клиента:",
+			"Endpoint": "fhir/contract/contractId/$meta-delete",
+			"PostData": "{'resourceType':'Parameters','id':'contractId','meta':{'security':[{'system':'read','code':'clientId'}]}}",
+			"ArgumentOne": "contractId",
+			"ArgumentTwo": "clientId",
+			"Headers": {
+				"Accept": "application/fhir+json,application/json",
+				"Content-Type": "application/json"
+			}
+		}
+	},
+	{
+	"What": "Запрос преаналитики R4",
+	"Zone": [ "Stage", "ProdR4"],
+	"WithWhat": {
+			"WhatToEnterOne": "Введите данные post:",
+			"Endpoint": "r4/fhir/$x-preanalytics",
+			"PostData": "postData",
+			"ArgumentOne": "postData",
+			"Headers": {
+				"Content-Type": "application/fhir+json"
+			}
+		}
+	},
+	{
+	"What": "Получение расширенной корзины b2c STU3",
+	"Zone": [ "Stage", "ProdR4"],
+	"WithWhat": {
+			"WhatToEnterOne": "Введите данные post:",
+			"Endpoint": "b2c/cart",
+			"PostData": "postData",
+			"ArgumentOne": "postData",
+			"Headers": {
+				"Content-Type": "application/json"
+			}
+		}
+	}
+]

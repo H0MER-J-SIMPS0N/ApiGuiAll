@@ -1,0 +1,10 @@
+{
+    "Content-Type": [
+         "application/fhir+json",
+         "application/json" 
+    ],
+    "Accept": [
+        "application/fhir+json",
+         "application/pdf" 
+    ]
+}

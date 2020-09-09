@@ -1,0 +1,27 @@
+[
+    {
+        "TokenAddress": "https://auth-stage.medlinx.online/connect/token",
+        "Zone": "Stage",
+        "Data": {
+            "grant_type": "password",
+            "client_id": "clientId",
+            "client_secret": "clientSecret",
+            "scope": "scope",
+            "username": "username",
+            "password": "password"
+        },
+        "BaseUrl": "https://api-stage.medlinx.online/"
+    },
+    {
+        "TokenAddress": "https://auth-url.ru/token",
+        "Zone": "ProdR4",
+        "Data": {
+            "grant_type": "refresh_token",
+            "client_id": "test",
+            "client_secret": "test",
+            "scope": "scope",
+            "refresh_token": "f4c4444823d44b90b789299e7cdb38500528117e46ef4123bf0f2be0ad3beab2"
+        },
+        "BaseUrl": "https://base-url.ru/"
+    }
+]

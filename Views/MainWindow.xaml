@@ -1,0 +1,468 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:ApiGuiAll.ViewModels;assembly=ApiGuiAll"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"        
+        x:Class="ApiGuiAll.Views.MainWindow"        
+        Title="ApiGuiAll" 
+        MinWidth="800" MinHeight="720" Width="1280" Height="720"  >
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <TabControl>
+        <TabItem Header="GET">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="30*" />
+                    <ColumnDefinition Width="15*" />
+                </Grid.ColumnDefinitions>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="8" VerticalAlignment="Center" >
+                        <ComboBox Items="{Binding Settings}" SelectedItem="{Binding ChosenSetting}" Margin="0, 5, 0, 5" >
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Zone}" HorizontalAlignment="Left" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <TextBlock Text="Что найти:" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="0, 5, 0, 5" />
+                        <ComboBox Items="{Binding SelectedGetRequests}" SelectedItem="{Binding ChosenGetRequestsSetting}" Margin="0, 5, 0, 5" >
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding What}" HorizontalAlignment="Left" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <TextBlock Text="Найти с помощью:" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="0, 5, 0, 5" />
+                        <ComboBox Items="{Binding ChosenGetRequestsSetting.ByWhat}" SelectedItem="{Binding ChosenByWhatGetSettings}" Margin="0, 5, 0, 5" >
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" TextWrapping="Wrap" MaxWidth="300"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <TextBlock Text="{Binding ChosenByWhatGetSettings.WhatToEnter}"  HorizontalAlignment="Left" TextWrapping="Wrap" Margin="0, 5, 0, 5" MaxWidth="300" />
+                        <TextBox Text="{Binding ValueToTransfer}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="0, 5, 0, 5"  MaxWidth="300" />
+                        <Button Content="Найти" Command="{Binding SendGetRequestCommand}" Margin="0, 5, 0, 5" IsDefault="True"/>
+                    </StackPanel>
+                </ScrollViewer>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBox Grid.Row="0" Text="{Binding AnswerText}" IsReadOnly="True" TextWrapping="Wrap" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0, 5, 0, 5" />
+                    <Button Grid.Row="1" Content="{Binding FilePath}" IsVisible="{Binding IsFilePath}" Command="{Binding OpenFile}" Margin="0, 5, 0, 5" />
+                </Grid>
+                <Grid Grid.Column="2" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{Binding SelectedToken.Duration}" VerticalAlignment="Top" TextWrapping="Wrap" Margin="0, 5, 0, 5" />
+                    <TextBox Grid.Row="1" Text="{Binding SelectedToken.Value}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Margin="0, 5, 0, 5" />
+                    <TextBox Grid.Row="2" Text="{Binding SelectedToken.Error}"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Margin="0, 5, 0, 5" />
+                    <ProgressBar Grid.Row="3" IsIndeterminate="{Binding IsWaiting}"  />
+                </Grid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="POST">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                    <ColumnDefinition Width="15*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <ComboBox Items="{Binding Settings}" SelectedItem="{Binding ChosenSetting}" Margin="0, 5, 0, 5" >
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Zone}" HorizontalAlignment="Left" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBlock Text="Что изменить:" Margin="0, 5, 0, 5" TextWrapping="Wrap" />
+                    <ComboBox Items="{Binding SelectedPostRequests}" SelectedItem="{Binding ChosenPostRequestsSetting}" Margin="0, 5, 0, 5" >
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding What}" HorizontalAlignment="Left" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBlock Text="{Binding ChosenPostRequestsSetting.WithWhat.WhatToEnterOne}"  Margin="0, 5, 0, 5" TextWrapping="Wrap" MaxWidth="300"/>
+                    <TextBox Text="{Binding ValueWhatToEnterOne}" TextWrapping="Wrap" AcceptsReturn="True" Margin="0, 5, 0, 5" ScrollViewer.VerticalScrollBarVisibility="Auto" MaxHeight="200"  MaxWidth="300"/>
+                    <TextBlock Text="{Binding ChosenPostRequestsSetting.WithWhat.WhatToEnterTwo }" Margin="0, 5, 0, 5" TextWrapping="Wrap" IsVisible="{Binding IsSecondAttributePostRequest}" MaxWidth="300" />
+                    <TextBox Text="{Binding ValueWhatToEnterTwo}" TextWrapping="Wrap" Margin="0, 5, 0, 5" ScrollViewer.VerticalScrollBarVisibility="Auto" IsVisible="{Binding IsSecondAttributePostRequest}"  MaxWidth="300" />
+                    <Button Content="Отправить" Command="{Binding SendPostRequestCommand}" Margin="0, 5, 0, 5" IsDefault="True"/>
+                </StackPanel>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBox Grid.Row="0" Text="{Binding AnswerText}" IsReadOnly="True" TextWrapping="Wrap" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0, 5, 0, 5" />
+                    <Button Grid.Row="1" Content="{Binding FilePath}" IsVisible="{Binding IsFilePath}" Command="{Binding OpenFile}" Margin="0, 5, 0, 5" />
+                </Grid>
+                <Grid Grid.Column="2" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{Binding SelectedToken.Duration}" VerticalAlignment="Top" TextWrapping="Wrap" Margin="0, 5, 0, 5" />
+                    <TextBox Grid.Row="1" Text="{Binding SelectedToken.Value}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Margin="0, 5, 0, 5" />
+                    <TextBox Grid.Row="2" Text="{Binding SelectedToken.Error}"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Margin="0, 5, 0, 5" />
+                    <ProgressBar Grid.Row="3" IsIndeterminate="{Binding IsWaiting}"  />
+                </Grid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Other">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="10*"></RowDefinition>
+                    <RowDefinition Height="10*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBox Text="{Binding ValueOther}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="2"  />
+                <Grid Grid.Column="0" Grid.Row="1" Grid.RowSpan="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="10*"></RowDefinition>
+                        <RowDefinition Height="10*"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <ComboBox Items="{Binding Settings}" Grid.Column="0" Grid.Row="0" SelectedItem="{Binding ChosenSetting}" Margin="0, 5, 0, 5" >
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Zone}" HorizontalAlignment="Left" />                            
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Grid Grid.Column="0" Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="8*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <ComboBox Grid.Column="0" Grid.Row="0" Items="{Binding HttpMethods}" SelectedItem="{Binding SelectedMethod}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" HorizontalAlignment="Left" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <TextBlock Text="Post" Margin="2" Grid.Column="0" Grid.Row="1" />
+                        <TextBox Text ="{Binding ValueOtherPost}" Grid.Column="0" Grid.Row="2" TextWrapping="Wrap" AcceptsReturn="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="2"  />
+                    </Grid> 
+                    <Grid Grid.Column="0" Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="7*"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Content-Type" />
+                        <ComboBox Grid.Column="0" Grid.Row="1" Items="{Binding HeaderContentType}" SelectedItem="{Binding SelectedHeaderContentType}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" HorizontalAlignment="Left" />                            
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>                        
+                        </ComboBox>
+                        <ListBox Grid.Column="0" Grid.Row="2" Items="{Binding Headers}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="2" >
+                            <ListBox.ItemTemplate>                            
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding HeaderName}" />
+                                        <ListBox Items="{Binding HeaderItems}">
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox Content="{Binding HeaderValue}" IsChecked="{Binding IsChecked}" />
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <Button Grid.Column="0" Grid.Row="3" Content="Отправить" Command="{Binding SendOtherRequestCommand}"  IsDefault="True"/>
+                    </Grid>
+                </Grid>                
+                <Grid Grid.Column="1" Grid.Row="2" Grid.RowSpan="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBox Grid.Row="0" Text="{Binding AnswerText}" IsReadOnly="True" TextWrapping="Wrap" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0, 5, 0, 5" />
+                    <Button Grid.Row="1" Content="{Binding FilePath}" IsVisible="{Binding IsFilePath}" Command="{Binding OpenFile}"  />                    
+                </Grid>
+                <Grid Grid.Column="2" Grid.RowSpan="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{Binding SelectedToken.Duration}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextWrapping="Wrap"   />
+                    <TextBox Grid.Row="1" Text="{Binding SelectedToken.Value}" IsReadOnly="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"   />
+                    <TextBox Grid.Row="2" Text="{Binding SelectedToken.Error}" IsReadOnly="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"   />
+                    <ProgressBar Grid.Row="3" IsIndeterminate="{Binding IsWaiting}"  />
+                </Grid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Nomenclature STU3">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="4*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />                    
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Text="{Binding ValueNomenclatureContract}" Grid.Row="0" Grid.Column="0" IsFocused="{Binding IsValueNomenclatureContractEnterFocused, Mode=OneWayToSource}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"  />
+                    <Button Grid.Row="0" Grid.Column="1" Command="{Binding SendNomenclatureRequestCommand}" IsDefault="{Binding IsValueNomenclatureContractEnterFocused}" HorizontalAlignment="Left" >Получить номенклатуру</Button>
+                    <TextBox Text="{Binding ValueFindNomenclature}" Grid.Row="1" Grid.Column="0" IsFocused="{Binding IsValueFindNomenclaturetEnterFocused, Mode=OneWayToSource}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"  />
+                    <Button Grid.Row="1" Grid.Column="1" Command="{Binding FindNomenclatureCommand}" IsDefault="{Binding IsValueFindNomenclaturetEnterFocused}" HorizontalAlignment="Left"  >Поиск</Button>
+                    <ComboBox Grid.Row="0" Grid.Column="2" Items="{Binding Settings}" SelectedItem="{Binding ChosenSetting}"  >
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Zone}" HorizontalAlignment="Left" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ProgressBar Grid.Row="1" Grid.Column="2" IsIndeterminate="{Binding IsWaiting}"  />
+                </Grid>
+                <ListBox Items="{Binding FoundNomenclature}" SelectedItem="{Binding SelectedFoundNomenclature}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding NomenclatureStu3String}"  />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <TextBlock Text="Id" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" />
+                <TextBox Text="{Binding SelectedFoundNomenclature.Id}" Grid.Row="3" Grid.Column="1" IsReadOnly="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"  />
+                <TextBlock Text="Заголовок" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right"  />
+                <TextBox Text="{Binding SelectedFoundNomenclature.Caption}" Grid.Row="4" Grid.Column="1" IsReadOnly="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"  />
+                <CheckBox IsChecked="{Binding SelectedFoundNomenclature.AllowMultipleItems}" Grid.Row="5" Grid.Column="0" IsEnabled="false" HorizontalAlignment="Right"  >Можно заказать исследование несколько раз</CheckBox>
+                <CheckBox IsChecked="{Binding SelectedFoundNomenclature.MultipleSpecimen}" Grid.Row="5" Grid.Column="1" IsEnabled="false"  >Можно выбрать несколько необязательных образцов</CheckBox>
+                <TextBlock Text="HXID" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" />
+                <TextBox Text="{Binding SelectedFoundNomenclature.LabId}" Grid.Row="6" Grid.Column="1" IsReadOnly="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"  />
+                <TextBlock Text="Заголовок HXID" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Right"  />
+                <TextBox Text="{Binding SelectedFoundNomenclature.LabCaption}" Grid.Row="7" Grid.Column="1" IsReadOnly="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"  />
+                <TextBlock Text="Группа исследований" Grid.Row="8" Grid.Column="0" HorizontalAlignment="Right"  />
+                <TextBox Text="{Binding SelectedFoundNomenclature.Group}" Grid.Row="8" Grid.Column="1" IsReadOnly="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"  />
+                <TextBlock Text="Описание" Grid.Row="9" Grid.Column="0" HorizontalAlignment="Right"  />
+                <TextBox Text="{Binding SelectedFoundNomenclature.Description}" Grid.Row="9" Grid.Column="1" IsReadOnly="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"  />
+                <TextBlock Text="Подготовка пациента" Grid.Row="10" Grid.Column="0" HorizontalAlignment="Right"  />
+                <TextBox Text="{Binding SelectedFoundNomenclature.PatientPreparationString}" Grid.Row="10" Grid.Column="1" IsReadOnly="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"  />
+                <Grid Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="5*" />                    
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Необязательные образцы" Grid.Row="0" Grid.Column="0"  />
+                    <ListBox Grid.Row="1" Grid.Column="0" Items="{Binding SelectedFoundNomenclature.Specimen}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
+                        <ListBox.ItemTemplate>                            
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBox Text="{Binding SpecimenString}" />                                
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <TextBlock Text="Обязательные образцы" Grid.Row="0" Grid.Column="1"  />
+                    <ListBox Grid.Row="1" Grid.Column="1" Items="{Binding SelectedFoundNomenclature.RequiredSpecimen}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
+                        <ListBox.ItemTemplate>                            
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBox Text="{Binding SpecimenString}" />                                
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Nomenclature R4">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="6*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="16*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />                    
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Text="{Binding ValueNomenclatureContractR4}" IsFocused="{Binding IsValueNomenclatureContractEnterFocusedR4, Mode=OneWayToSource}" Grid.Row="0" Grid.Column="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" MaxHeight="25" />
+                    <Button Grid.Row="0" Grid.Column="1" Command="{Binding SendNomenclatureR4RequestCommand}" IsDefault="{Binding IsValueNomenclatureContractEnterFocusedR4}" HorizontalAlignment="Left" >Получить номенклатуру</Button>
+                    <TextBox Text="{Binding ValueFindNomenclatureR4}" IsFocused="{Binding IsValueFindNomenclatureEnterFocusedR4, Mode=OneWayToSource}" Grid.Row="1" Grid.Column="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" MaxHeight="25" />
+                    <Button Grid.Row="1" Grid.Column="1"  Command="{Binding FindNomenclatureR4Command}" IsDefault="{Binding IsValueFindNomenclatureEnterFocusedR4}" HorizontalAlignment="Left"  >Поиск</Button>
+                    <ComboBox Grid.Row="0" Grid.Column="2" Items="{Binding Settings}" SelectedItem="{Binding ChosenSetting}" MaxHeight="25"  >
+                      <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                          <StackPanel MaxHeight="25" >
+                            <TextBlock Text="{Binding Zone}" HorizontalAlignment="Left" MaxHeight="25"  />
+                          </StackPanel>
+                        </DataTemplate>
+                      </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ProgressBar Grid.Row="1" Grid.Column="2" IsIndeterminate="{Binding IsWaitingR4}" MaxHeight="20" />
+                </Grid>
+                <ListBox Items="{Binding FoundNomenclatureR4}" SelectedItem="{Binding SelectedFoundNomenclatureR4}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding NomenclatureR4String}"  />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <TextBlock Text="HXID" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3,3,3,3" />
+                <TextBox Text="{Binding SelectedFoundNomenclatureR4.Hxid}" Grid.Row="3" Grid.Column="1" IsReadOnly="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" MaxHeight="25" />
+                <TextBlock Text="Заголовок" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3,3,3,3" />
+                <TextBox Text="{Binding SelectedFoundNomenclatureR4.Caption}" Grid.Row="4" Grid.Column="1" IsReadOnly="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" MaxHeight="25" />
+                <TextBlock Text="Описание" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3,3,3,3" />
+                <TextBox Text="{Binding SelectedFoundNomenclatureR4.Description}" Grid.Row="5" Grid.Column="1" IsReadOnly="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" MaxHeight="25" />
+                <CheckBox IsChecked="{Binding SelectedFoundNomenclatureR4.IsMultipleAnalysis}" Grid.Row="6" Grid.Column="0" IsEnabled="false" HorizontalAlignment="Right"  >Можно заказать исследование несколько раз</CheckBox>
+                <CheckBox IsChecked="{Binding SelectedFoundNomenclatureR4.IsMultipleSpecimen}" Grid.Row="6" Grid.Column="1" IsEnabled="false"  >Можно выбрать несколько необязательных образцов</CheckBox>                
+                <Grid Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="14*" />                    
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Необязательные образцы" Grid.Row="0" Grid.Column="0"  />
+                    <ListBox Grid.Row="1" Grid.Column="0" Items="{Binding SelectedFoundNomenclatureR4.SpecimensR4}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
+                        <ListBox.ItemTemplate>                            
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBox Text="{Binding SpecimenString}" />                                
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <TextBlock Text="Обязательные образцы" Grid.Row="0" Grid.Column="1"  />
+                    <ListBox Grid.Row="1" Grid.Column="1" Items="{Binding SelectedFoundNomenclatureR4.RequiredSpecimensR4}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
+                        <ListBox.ItemTemplate>                            
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBox Text="{Binding SpecimenString}" />                                
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Stu3 Find Tasks By LabelId">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="30*" />
+                    <ColumnDefinition Width="15*" />
+                </Grid.ColumnDefinitions>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                    <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="8" VerticalAlignment="Center" >
+                        <ComboBox Items="{Binding Settings}" SelectedItem="{Binding ChosenSetting}" Margin="0, 5, 0, 5" >
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Zone}" HorizontalAlignment="Left" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <TextBlock Text="Введите номер образца:"/>
+                        <TextBox Text="{Binding LabelId}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="0, 5, 0, 5"  MaxWidth="300" />
+                        <Button Content="Найти" IsDefault="true" Command="{Binding FindTasksByLabelIdCommand}" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="0, 5, 0, 5"  MaxWidth="300"/>
+                    </StackPanel>
+                </ScrollViewer>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBox Grid.Row="0" Text="{Binding AnswerText}" IsReadOnly="True" TextWrapping="Wrap" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0, 5, 0, 5" />
+                    <Button Grid.Row="1" Content="{Binding FilePath}" IsVisible="{Binding IsFilePath}" Command="{Binding OpenFile}" Margin="0, 5, 0, 5" />
+                </Grid>
+                <Grid Grid.Column="2" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{Binding SelectedToken.Duration}" VerticalAlignment="Top" TextWrapping="Wrap" Margin="0, 5, 0, 5" />
+                    <TextBox Grid.Row="1" Text="{Binding SelectedToken.Value}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Margin="0, 5, 0, 5" />
+                    <TextBox Grid.Row="2" Text="{Binding SelectedToken.Error}"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Margin="0, 5, 0, 5" />
+                    <ProgressBar Grid.Row="3" IsIndeterminate="{Binding IsWaiting}"  />
+                </Grid>
+            </Grid>
+        </TabItem>
+    </TabControl>
+
+</Window>
